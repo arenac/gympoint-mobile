@@ -1,13 +1,16 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { Provider } from 'react-redux';
 
-import Button from '~/components/Button';
-// import { Container } from './styles';
+import './config/ReactotronConfig';
+
+import store from './store';
+
+import App from './App';
 
 export default function Index() {
   return (
-    <SafeAreaView>
-      <Button />
-    </SafeAreaView>
+    <Provider store={store}>
+      <App />
+    </Provider>
   );
 }
