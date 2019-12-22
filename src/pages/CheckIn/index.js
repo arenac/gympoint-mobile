@@ -1,16 +1,39 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { View, Text } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-// import { Container } from './styles';
+import api from '~/services/api';
+import { Container, List } from './styles';
 
-export default function CheckIn({ navigation }) {
-  const checkins = navigation.getParam('checkins');
+export default function CheckIn() {
+  const id = useSelector(state => state.student.id);
+  const [checkins, setCheckins] = useState([]);
 
-  console.tron.log(checkins);
+  async function fetchCheckins() {
+    const response = await api.get(`students/1/checkins`);
 
-  return <View />;
+    setCheckins(response.data);
+  }
+  
+  useEffect(() => {
+
+    fetchCheckins();
+  }, []);
+
+  return (
+    <Container>
+    
+      <List
+          data={checkins}
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) => (
+            <Text>{item.id}</Text>
+          )}
+        />
+    </Container>
+  );
 }
 
 
