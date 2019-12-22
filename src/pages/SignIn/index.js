@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import logo from '~/assets/logo.png';
 
@@ -17,10 +17,13 @@ import {
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.student.loading);
+
   const [id, setId] = useState('');
 
-  async function handleSubmit() {
+  function handleSubmit() {
     dispatch(validateRequest(id));
+    setId('');
   }
 
   return (
@@ -37,7 +40,8 @@ export default function SignIn({ navigation }) {
             onChangeText={setId}
           />
         </InputContainer>
-        <SubmitButton onPress={handleSubmit}>Enter</SubmitButton>
+        
+        <SubmitButton loading={loading} onPress={handleSubmit}>Enter</SubmitButton>
       </Form>
     </Container>
   );
