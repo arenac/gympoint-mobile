@@ -15,7 +15,7 @@ export default function CheckIn({ navigation }) {
 
 
 CheckIn.navigationOptions = {
-  tabBarLabel: 'Dashboard',
+  tabBarLabel: 'Check-in',
   tabBarIcon: ({ tintColor }) => (
     <Icon name="check-circle" size={20} color={tintColor} />
   ),
