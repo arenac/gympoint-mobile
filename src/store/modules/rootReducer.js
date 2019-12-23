@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
 
-import student from './student/reducer';
+import auth from './auth/reducer';
 
-export default combineReducers({ student });
+export default combineReducers({ auth });

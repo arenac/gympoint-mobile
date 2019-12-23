@@ -11,7 +11,7 @@ import api from '~/services/api';
 import { Container, NewCheckinButton, List, CheckinContainer, CheckInText, When } from './styles';
 
 export default function CheckIn() {
-  const id = useSelector(state => state.student.student.id);
+  const id = useSelector(state => state.auth.student.id);
   const [checkins, setCheckins] = useState([]);
   const [checkinLoading, setCheckingLoadin] = useState(false);
 
