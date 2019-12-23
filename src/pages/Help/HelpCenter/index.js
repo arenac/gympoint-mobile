@@ -1,8 +1,58 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { formatDistance, parseISO } from 'date-fns';
+import en from 'date-fns/locale/en-US';
 
-// import { Container } from './styles';
+import api from '~/services/api';
 
-export default function Help() {
-  return <View />;
+import { Container, NewHelpQuestion, List, HelpCard, HelpContainer, Header, Status, When, Question } from './styles';
+
+export default function Help({ navigation }) {
+  const id = useSelector(state => state.auth.student.id);
+  const [helpList, setHelpList] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchHelpList() {
+      const response = await api.get(`students/${id}/help-orders`);
+      const data = response.data.map(help => {
+        return {
+          ...help,
+          formatedDate: formatDistance(parseISO(help.createdAt), new Date(), { addSuffix: true, locale: en}),
+          answerd: help.answer !== null,
+        }
+      });
+      setHelpList(data);
+    }
+    fetchHelpList();
+  }, [id]);
+
+  function handleHelpRequest() {
+    navigation.navigate('NewQuestion')
+  }
+  
+  function handleShowQuestion(item) {
+    navigation.navigate('Question', { question: item })
+  }
+
+  return (
+    <Container>
+      <NewHelpQuestion loading={loading} onPress={handleHelpRequest}>Request support</NewHelpQuestion>
+     <List
+        data={helpList}
+        keyExtractor={item => String(item.id)}
+        renderItem={({ item }) => (
+          <HelpCard onPress={() => handleShowQuestion(item)}>
+            <HelpContainer>
+              <Header>
+                <Status answerd={item.answerd}>{(item.answerd ? 'Answred' : 'Pending')}</Status>
+                <When>{item.formatedDate}</When>
+              </Header>
+              <Question numberOfLines={3}>{item.question}</Question>
+            </HelpContainer>
+          </HelpCard>
+        )}
+      />
+    </Container>
+  );
 }

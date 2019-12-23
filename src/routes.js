@@ -18,13 +18,14 @@ export default (isSigned = false) =>
     createSwitchNavigator(
       {
         SignIn,
-        App: createStackNavigator({
+        App: createStackNavigator(
+          {
           Home: {
             screen: createBottomTabNavigator(
               {
                 CheckIn,
                 Help: {
-                  screen: createSwitchNavigator(
+                  screen: createStackNavigator(
                     {
                       HelpCenter,
                       Question,
@@ -32,7 +33,14 @@ export default (isSigned = false) =>
                     },
                     {
                       initialRouteName: 'HelpCenter',
-                    }
+                      defaultNavigationOptions: {
+                        headerTransparent: true,
+                        headerTintColor: '#fff',
+                        headerLeftContainerStyle: {
+                          marginLeft: 20,
+                        },
+                      },
+                    },
                   ),
                   navigationOptions: {
                     tabBarIcon: ({ tintColor }) => (
@@ -52,12 +60,13 @@ export default (isSigned = false) =>
                   },
                   style: {
                     backgroundColor: '#fff',
+                    marginBottom: 10,
                   },
                 },
               }
             ),
             navigationOptions: {
-              headerTitle: <Header />,              
+              headerTitle: <Header />,          
             },
           }
         })

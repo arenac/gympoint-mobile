@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import logo from '~/assets/logo.png';
 
 import api from '~/services/api';
-import { validateRequest } from '~/store/modules/student/actions';
+import { validateRequest } from '~/store/modules/auth/actions';
 
 import {
   Container,
@@ -17,7 +17,7 @@ import {
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.student.loading);
+  const loading = useSelector(state => state.auth.loading);
 
   const [id, setId] = useState('');
 
