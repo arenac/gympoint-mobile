@@ -32,7 +32,7 @@ export default function Help({ navigation }) {
   }
   
   function handleShowQuestion(item) {
-    navigation.navigate('Question', { question: item })
+    navigation.navigate('Question', { help: item })
   }
 
   return (
