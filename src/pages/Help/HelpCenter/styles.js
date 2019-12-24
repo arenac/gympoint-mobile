@@ -9,7 +9,6 @@ export const Container = styled.View`
   flex 1;
   padding: 0 20px;
   background: #ddd;
-  margin: 0;
 `;
 
 export const NewHelpQuestion = styled(Button)`
@@ -22,16 +21,17 @@ export const List = styled.FlatList.attrs({
   height: 100%;
 `;
 
-export const HelpCard = styled(TouchableOpacity)`
-  flex: 1;
-`;
 
 export const HelpContainer = styled.View`
-  background: #fff;
-  margin-top: 10px;
-  padding: 15px;
-  border-radius: 4px;
-  border: 1px solid #aaa;`;
+flex: 1;
+background: #fff;
+margin-top: 10px;
+padding: 15px;
+border-radius: 4px;
+border: 1px solid #aaa;`;
+
+export const HelpCard = styled(TouchableOpacity)`
+`;
 
 export const Header = styled.View`
   flex-direction: row;

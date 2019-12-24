@@ -5,7 +5,7 @@ import en from 'date-fns/locale/en-US';
 
 import api from '~/services/api';
 
-import { Container, NewHelpQuestion, List, HelpCard, HelpContainer, Header, Status, When, Question } from './styles';
+import { Container, NewHelpQuestion, List, HelpContainer, HelpCard, Header, Status, When, Question } from './styles';
 
 export default function Help({ navigation }) {
   const id = useSelector(state => state.auth.student.id);
@@ -41,16 +41,19 @@ export default function Help({ navigation }) {
      <List
         data={helpList}
         keyExtractor={item => String(item.id)}
+        contentContainerStyle={{
+          paddingBottom: 100,
+        }}
         renderItem={({ item }) => (
-          <HelpCard onPress={() => handleShowQuestion(item)}>
-            <HelpContainer>
+          <HelpContainer>
+            <HelpCard onPress={() => handleShowQuestion(item)}>
               <Header>
                 <Status answerd={item.answerd}>{(item.answerd ? 'Answred' : 'Pending')}</Status>
                 <When>{item.formatedDate}</When>
               </Header>
               <Question numberOfLines={3}>{item.question}</Question>
-            </HelpContainer>
-          </HelpCard>
+            </HelpCard>
+          </HelpContainer>
         )}
       />
     </Container>

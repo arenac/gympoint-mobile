@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Alert } from 'react-native';
 import { formatDistance, parseISO } from 'date-fns';
 import en from 'date-fns/locale/en-US';
 
@@ -34,31 +35,42 @@ export default function CheckIn() {
 
   async function handleCheckin() {
     setCheckingLoadin(true);
-    const response = await api.post(`students/${id}/checkins`);
+    try {
+      const response = await api.post(`students/${id}/checkins`);
+      
+      const data = {
+        ...response.data,
+        initialDateFormated: formatDistance(parseISO(response.data.createdAt), new Date(), { addSuffix: true, locale: en}),
+      }
 
-    const data = {
-      ...response.data,
-      initialDateFormated: formatDistance(parseISO(response.data.createdAt), new Date(), { addSuffix: true, locale: en}),
+      setCheckins([...checkins, data]);
+    } catch (err) {
+      const { data } = err.response;
+      if(data && data.error) {
+        Alert.alert('Check-in failure', data.error);
+      } else {
+        Alert.alert('Check-in failure', 'Contact the admistrator to understan your problem.');
+      }
     }
-
-    setCheckins([data, ...checkins])
-
     setCheckingLoadin(false);
   }
+
+  const renderItem = ({ item }) => (
+    <CheckinContainer>
+      <CheckInText>{`Check-in #${item.id}`}</CheckInText>
+
+      <When>{item.initialDateFormated}</When>
+    </CheckinContainer>
+  );
 
   return (
     <Container>
       <NewCheckinButton loading={checkinLoading} onPress={handleCheckin}>New check-in</NewCheckinButton>
       <List
         data={checkins}
+        extraData={checkins}
         keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => (
-          <CheckinContainer>
-            <CheckInText>{`Check-in #${item.id}`}</CheckInText>
-
-            <When>{item.initialDateFormated}</When>
-          </CheckinContainer>
-        )}
+        renderItem={renderItem}
       />
     </Container>
   );
