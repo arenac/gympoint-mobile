@@ -14,7 +14,13 @@ export const NewCheckinButton = styled(Button)`
 
 export const List = styled.FlatList.attrs({
     showsVerticalScrollIndicator: false,
-  })``;
+    contentContainerStyle: {
+      paddingBottom: 10,
+    },
+  })`
+    flex: 1;
+    height: 100%;
+  `;
 
   export const CheckinContainer = styled.View`
     flex: 1;
