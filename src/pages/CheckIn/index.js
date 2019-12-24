@@ -52,6 +52,9 @@ export default function CheckIn() {
       <List
         data={checkins}
         keyExtractor={item => String(item.id)}
+        contentContainerStyle={{
+          paddingBottom: 10,
+        }}
         renderItem={({ item }) => (
           <CheckinContainer>
             <CheckInText>{`Check-in #${item.id}`}</CheckInText>
