@@ -18,8 +18,7 @@ export default (isSigned = false) =>
     createSwitchNavigator(
       {
         SignIn,
-        App: createStackNavigator(
-          {
+        App: createStackNavigator({
           Home: {
             screen: createBottomTabNavigator(
               {
@@ -40,13 +39,13 @@ export default (isSigned = false) =>
                           marginLeft: 20,
                         },
                       },
-                    },
+                    }
                   ),
                   navigationOptions: {
                     tabBarIcon: ({ tintColor }) => (
                       <Icon name="help" size={20} color={tintColor} />
-                    )
-                  }
+                    ),
+                  },
                 },
               },
               {
@@ -66,10 +65,10 @@ export default (isSigned = false) =>
               }
             ),
             navigationOptions: {
-              headerTitle: <Header />,          
+              headerTitle: <Header />,
             },
-          }
-        })
+          },
+        }),
       },
       {
         initialRouteName: isSigned ? 'App' : 'SignIn',
