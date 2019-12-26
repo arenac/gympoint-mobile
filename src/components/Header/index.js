@@ -7,10 +7,8 @@ import { Container } from './styles';
 
 export default function Header() {
   return (
-   <Container>
-       <Image
-        source={image}
-       />
-   </Container>
+    <Container>
+      <Image source={image} />
+    </Container>
   );
 }

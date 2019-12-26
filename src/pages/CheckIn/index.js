@@ -8,8 +8,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '~/services/api';
 
-
-import { Container, NewCheckinButton, List, CheckinContainer, CheckInText, When } from './styles';
+import {
+  Container,
+  NewCheckinButton,
+  List,
+  CheckinContainer,
+  CheckInText,
+  When,
+} from './styles';
 
 export default function CheckIn() {
   const id = useSelector(state => state.auth.student.id);
@@ -22,8 +28,12 @@ export default function CheckIn() {
     const data = response.data.map(checkin => {
       return {
         ...checkin,
-        initialDateFormated: formatDistance(parseISO(checkin.createdAt), new Date(), { addSuffix: true, locale: en}),
-      }
+        initialDateFormated: formatDistance(
+          parseISO(checkin.createdAt),
+          new Date(),
+          { addSuffix: true, locale: en }
+        ),
+      };
     });
 
     setCheckins(data);
@@ -31,25 +41,32 @@ export default function CheckIn() {
 
   useEffect(() => {
     fetchCheckins();
-  }, [id]);
+  }, [fetchCheckins, id]);
 
   async function handleCheckin() {
     setCheckingLoadin(true);
     try {
       const response = await api.post(`students/${id}/checkins`);
-      
+
       const data = {
         ...response.data,
-        initialDateFormated: formatDistance(parseISO(response.data.createdAt), new Date(), { addSuffix: true, locale: en}),
-      }
+        initialDateFormated: formatDistance(
+          parseISO(response.data.createdAt),
+          new Date(),
+          { addSuffix: true, locale: en }
+        ),
+      };
 
       setCheckins([...checkins, data]);
     } catch (err) {
       const { data } = err.response;
-      if(data && data.error) {
+      if (data && data.error) {
         Alert.alert('Check-in failure', data.error);
       } else {
-        Alert.alert('Check-in failure', 'Contact the admistrator to understan your problem.');
+        Alert.alert(
+          'Check-in failure',
+          'Contact the admistrator to understan your problem.'
+        );
       }
     }
     setCheckingLoadin(false);
@@ -65,7 +82,9 @@ export default function CheckIn() {
 
   return (
     <Container>
-      <NewCheckinButton loading={checkinLoading} onPress={handleCheckin}>New check-in</NewCheckinButton>
+      <NewCheckinButton loading={checkinLoading} onPress={handleCheckin}>
+        New check-in
+      </NewCheckinButton>
       <List
         data={checkins}
         extraData={checkins}
@@ -75,7 +94,6 @@ export default function CheckIn() {
     </Container>
   );
 }
-
 
 CheckIn.navigationOptions = {
   tabBarLabel: 'Check-in',

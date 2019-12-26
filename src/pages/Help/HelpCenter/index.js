@@ -5,7 +5,17 @@ import en from 'date-fns/locale/en-US';
 
 import api from '~/services/api';
 
-import { Container, NewHelpQuestion, List, HelpContainer, HelpCard, Header, Status, When, Question } from './styles';
+import {
+  Container,
+  NewHelpQuestion,
+  List,
+  HelpContainer,
+  HelpCard,
+  Header,
+  Status,
+  When,
+  Question,
+} from './styles';
 
 export default function Help({ navigation }) {
   const id = useSelector(state => state.auth.student.id);
@@ -18,9 +28,12 @@ export default function Help({ navigation }) {
       const data = response.data.map(help => {
         return {
           ...help,
-          formatedDate: formatDistance(parseISO(help.createdAt), new Date(), { addSuffix: true, locale: en}),
+          formatedDate: formatDistance(parseISO(help.createdAt), new Date(), {
+            addSuffix: true,
+            locale: en,
+          }),
           answerd: help.answer !== null,
-        }
+        };
       });
       setHelpList(data);
     }
@@ -28,17 +41,19 @@ export default function Help({ navigation }) {
   }, [id]);
 
   function handleHelpRequest() {
-    navigation.navigate('NewQuestion')
+    navigation.navigate('NewQuestion');
   }
-  
+
   function handleShowQuestion(item) {
-    navigation.navigate('Question', { help: item })
+    navigation.navigate('Question', { help: item });
   }
 
   return (
     <Container>
-      <NewHelpQuestion loading={loading} onPress={handleHelpRequest}>Request support</NewHelpQuestion>
-     <List
+      <NewHelpQuestion loading={loading} onPress={handleHelpRequest}>
+        Request support
+      </NewHelpQuestion>
+      <List
         data={helpList}
         keyExtractor={item => String(item.id)}
         contentContainerStyle={{
@@ -48,7 +63,9 @@ export default function Help({ navigation }) {
           <HelpContainer>
             <HelpCard onPress={() => handleShowQuestion(item)}>
               <Header>
-                <Status answerd={item.answerd}>{(item.answerd ? 'Answred' : 'Pending')}</Status>
+                <Status answerd={item.answerd}>
+                  {item.answerd ? 'Answred' : 'Pending'}
+                </Status>
                 <When>{item.formatedDate}</When>
               </Header>
               <Question numberOfLines={3}>{item.question}</Question>

@@ -1,7 +1,5 @@
 import styled from 'styled-components/native';
-import {
-  TouchableOpacity,
- } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import Button from '~/components/Button';
 
@@ -21,17 +19,16 @@ export const List = styled.FlatList.attrs({
   height: 100%;
 `;
 
-
 export const HelpContainer = styled.View`
-flex: 1;
-background: #fff;
-margin-top: 10px;
-padding: 15px;
-border-radius: 4px;
-border: 1px solid #aaa;`;
-
-export const HelpCard = styled(TouchableOpacity)`
+  flex: 1;
+  background: #fff;
+  margin-top: 10px;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #aaa;
 `;
+
+export const HelpCard = styled(TouchableOpacity)``;
 
 export const Header = styled.View`
   flex-direction: row;
@@ -40,7 +37,7 @@ export const Header = styled.View`
 `;
 
 export const Status = styled.Text`
-  color: ${props => props.answerd ? '#42CB59' : '#999'}
+  color: ${props => (props.answerd ? '#42CB59' : '#999')}
   font-size: 14px;
   font-weight: bold;
   margin-left: 15px;
@@ -54,4 +51,3 @@ export const When = styled.Text`
 export const Question = styled.Text`
   font-size: 14px;
 `;
-
