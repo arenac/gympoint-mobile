@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import logo from '~/assets/logo.png';
 
@@ -40,8 +40,10 @@ export default function SignIn({ navigation }) {
             onChangeText={setId}
           />
         </InputContainer>
-        
-        <SubmitButton loading={loading} onPress={handleSubmit}>Enter</SubmitButton>
+
+        <SubmitButton loading={loading} onPress={handleSubmit}>
+          Enter
+        </SubmitButton>
       </Form>
     </Container>
   );
