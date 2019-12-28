@@ -9,15 +9,17 @@ export default function NewQuestion({ navigation }) {
   const [question, setQuestion] = useState('');
   const id = useSelector(state => state.auth.student.id);
   const onAddNewHelp = navigation.getParam('onAddNewHelp');
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit() {
     if (question !== '') {
+      setLoading(true);
       const response = await api.post(`students/${id}/help-orders`, {
         question,
       });
-      console.tron.log('response', response.data);
       onAddNewHelp(response.data);
     }
+    setLoading(false);
   }
 
   return (
@@ -29,10 +31,10 @@ export default function NewQuestion({ navigation }) {
         onChangeText={value => setQuestion(value)}
         placeholder="Insert your question"
         textAlignVertical="top"
-        returnKeyType="send"
-        onSubmitEditing={handleSubmit}
       />
-      <NewQuestionButton onPress={handleSubmit}>Send request</NewQuestionButton>
+      <NewQuestionButton loading={loading} onPress={handleSubmit}>
+        Send request
+      </NewQuestionButton>
     </Container>
   );
 }
