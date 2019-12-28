@@ -47,16 +47,17 @@ export default function CheckIn() {
     try {
       const response = await api.post(`students/${id}/checkins`);
 
-      setCheckins(list =>
-        list.concat({
+      setCheckins(items => [
+        {
           ...response.data,
           initialDateFormated: formatDistance(
             parseISO(response.data.createdAt),
             new Date(),
             { addSuffix: true, locale: en }
           ),
-        })
-      );
+        },
+        ...items,
+      ]);
     } catch (err) {
       const { data } = err.response;
       if (data && data.error) {
@@ -71,7 +72,7 @@ export default function CheckIn() {
     setCheckingLoadin(false);
   }
 
-  const renderItem = ({ item }) => (
+  const CheckinItem = ({ item }) => (
     <CheckinContainer>
       <CheckInText>{`Check-in #${item.id}`}</CheckInText>
 
@@ -87,8 +88,8 @@ export default function CheckIn() {
       <List
         data={checkins}
         extraData={checkins}
-        keyExtractor={item => String(item.id)}
-        renderItem={renderItem}
+        keyExtractor={(item, index) => index}
+        renderItem={CheckinItem}
       />
     </Container>
   );
