@@ -20,7 +20,6 @@ import {
 export default function Help({ navigation }) {
   const id = useSelector(state => state.auth.student.id);
   const [helpList, setHelpList] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchHelpList() {
@@ -40,8 +39,24 @@ export default function Help({ navigation }) {
     fetchHelpList();
   }, [id]);
 
+  function onAddNewHelp(help) {
+    if (help) {
+      setHelpList(list =>
+        list.concat({
+          ...help,
+          formatedDate: formatDistance(parseISO(help.createdAt), new Date(), {
+            addSuffix: true,
+            locale: en,
+          }),
+          answerd: help.answer !== null,
+        })
+      );
+    }
+    console.tron.log(helpList);
+  }
+
   function handleHelpRequest() {
-    navigation.navigate('NewQuestion');
+    navigation.navigate('NewQuestion', { onAddNewHelp });
   }
 
   function handleShowQuestion(item) {
@@ -50,7 +65,7 @@ export default function Help({ navigation }) {
 
   return (
     <Container>
-      <NewHelpQuestion loading={loading} onPress={handleHelpRequest}>
+      <NewHelpQuestion onPress={handleHelpRequest}>
         Request support
       </NewHelpQuestion>
       <List
