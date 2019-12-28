@@ -41,18 +41,18 @@ export default function Help({ navigation }) {
 
   function onAddNewHelp(help) {
     if (help) {
-      setHelpList(list =>
-        list.concat({
+      setHelpList(items => [
+        {
           ...help,
           formatedDate: formatDistance(parseISO(help.createdAt), new Date(), {
             addSuffix: true,
             locale: en,
           }),
-          answerd: help.answer !== null,
-        })
-      );
+          answerd: false,
+        },
+        ...items,
+      ]);
     }
-    console.tron.log(helpList);
   }
 
   function handleHelpRequest() {
@@ -70,7 +70,8 @@ export default function Help({ navigation }) {
       </NewHelpQuestion>
       <List
         data={helpList}
-        keyExtractor={item => String(item.id)}
+        extraData={helpList}
+        keyExtractor={(item, index) => index}
         contentContainerStyle={{
           paddingBottom: 100,
         }}
