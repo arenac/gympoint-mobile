@@ -4,7 +4,6 @@ import { Container, Card, Header, Type, When, Text } from './styles';
 
 export default function Question({ navigation }) {
   const help = navigation.getParam('help');
-  console.tron.log(help);
   return (
     <Container>
       <Card>
