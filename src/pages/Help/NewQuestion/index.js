@@ -31,8 +31,6 @@ export default function NewQuestion({ navigation }) {
         onChangeText={value => setQuestion(value)}
         placeholder="Insert your question"
         textAlignVertical="top"
-        returnKeyType="send"
-        onSubmitEditing={handleSubmit}
       />
       <NewQuestionButton loading={loading} onPress={handleSubmit}>
         Send request
