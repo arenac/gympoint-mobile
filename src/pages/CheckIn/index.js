@@ -40,7 +40,7 @@ export default function CheckIn() {
       setCheckins(data);
     }
     fetchCheckins();
-  }, [fetchCheckins, id]);
+  }, [id]);
 
   async function handleNewCheckin() {
     setCheckingLoadin(true);
