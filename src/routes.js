@@ -33,11 +33,8 @@ export default (isSigned = false) =>
                     {
                       initialRouteName: 'HelpCenter',
                       defaultNavigationOptions: {
+                        headerLeft: null,
                         headerTransparent: true,
-                        headerTintColor: '#fff',
-                        headerLeftContainerStyle: {
-                          marginLeft: 20,
-                        },
                       },
                     }
                   ),
