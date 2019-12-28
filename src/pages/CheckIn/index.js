@@ -22,42 +22,41 @@ export default function CheckIn() {
   const [checkins, setCheckins] = useState([]);
   const [checkinLoading, setCheckingLoadin] = useState(false);
 
-  async function fetchCheckins() {
-    const response = await api.get(`students/${id}/checkins`);
-
-    const data = response.data.map(checkin => {
-      return {
-        ...checkin,
-        initialDateFormated: formatDistance(
-          parseISO(checkin.createdAt),
-          new Date(),
-          { addSuffix: true, locale: en }
-        ),
-      };
-    });
-
-    setCheckins(data);
-  }
-
   useEffect(() => {
+    async function fetchCheckins() {
+      const response = await api.get(`students/${id}/checkins`);
+
+      const data = response.data.map(checkin => {
+        return {
+          ...checkin,
+          initialDateFormated: formatDistance(
+            parseISO(checkin.createdAt),
+            new Date(),
+            { addSuffix: true, locale: en }
+          ),
+        };
+      });
+
+      setCheckins(data);
+    }
     fetchCheckins();
   }, [fetchCheckins, id]);
 
-  async function handleCheckin() {
+  async function handleNewCheckin() {
     setCheckingLoadin(true);
     try {
       const response = await api.post(`students/${id}/checkins`);
 
-      const data = {
-        ...response.data,
-        initialDateFormated: formatDistance(
-          parseISO(response.data.createdAt),
-          new Date(),
-          { addSuffix: true, locale: en }
-        ),
-      };
-
-      setCheckins([...checkins, data]);
+      setCheckins(list =>
+        list.concat({
+          ...response.data,
+          initialDateFormated: formatDistance(
+            parseISO(response.data.createdAt),
+            new Date(),
+            { addSuffix: true, locale: en }
+          ),
+        })
+      );
     } catch (err) {
       const { data } = err.response;
       if (data && data.error) {
@@ -82,7 +81,7 @@ export default function CheckIn() {
 
   return (
     <Container>
-      <NewCheckinButton loading={checkinLoading} onPress={handleCheckin}>
+      <NewCheckinButton loading={checkinLoading} onPress={handleNewCheckin}>
         New check-in
       </NewCheckinButton>
       <List

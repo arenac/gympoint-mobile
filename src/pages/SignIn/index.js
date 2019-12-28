@@ -36,6 +36,7 @@ export default function SignIn({ navigation }) {
             autoCaptalize="none"
             placeholder="Your ID"
             returnKeyType="send"
+            onSubmitEditing={handleSubmit}
             value={id}
             onChangeText={setId}
           />
