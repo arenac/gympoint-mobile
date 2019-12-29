@@ -18,6 +18,7 @@ export default function NewQuestion({ navigation }) {
         question,
       });
       onAddNewHelp(response.data);
+      navigation.navigate('HelpCenter');
     }
     setLoading(false);
   }
